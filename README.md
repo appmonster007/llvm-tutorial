@@ -15,6 +15,31 @@ LLD and, confusingly enough, the LLVM sub-project. We consider in this tutorial:
 We will be building LLVM v`12.0.1` which is the latest as of this writing.
 We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4).
 
+### Current file structure ###
+```
+llvm-tutorial
+├── LICENSE
+├── README.md
+└── src
+    ├── CMakeLists.txt
+    ├── CustomLegacyPass
+    │   ├── CMakeLists.txt
+    │   ├── MyLegacyPass.cpp
+    │   └── MyLegacyPass.h
+    ├── CustomNewPass
+    │   ├── CMakeLists.txt
+    │   ├── MyNewPass.cpp
+    │   └── MyNewPass.h
+    └── tmp
+        ├── cfile.bc
+        ├── cfile.c
+        ├── cfile.ll
+        ├── cppfile.bc
+        ├── cppfile.cpp
+        └── cppfile.ll
+
+4 directories, 15 files
+```
 
 ## Compiling LLVM ##
 Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).

@@ -37,6 +37,5 @@ build
 # VSCode Settings
 .vscode
 
-# temporary dir to store [.c|.cpp|.bc|.ll] files and 
-tmp
+# temporary 
 .DS_Store
