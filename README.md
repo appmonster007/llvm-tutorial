@@ -90,10 +90,10 @@ to build the skeleton new LLVM pass found in `CustomNewPass` folder :
 [Important] Enable or add respective pass folder in CMakeLists.txt
 
 ```bash
-$ cd llvm-pass-tutorial
+$ cd llvm-tutorial
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake ../src/
 $ make
 ```
 
@@ -102,17 +102,26 @@ setup `[LLVM_DIR]` based on `$LLVM_HOME` for you. Now the easiest way to run the
 
 [Legacy]
 ```bash
-$ clang -Xclang -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.so tmp/{file}.c # C frontend
-$ clang++ -Xclang -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.* tmp/{file}.cpp # C++ frontend
+$ clang \
+    -Xclang \
+    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.so src/tmp/{file}.c # C frontend
+$ clang++ \
+    -Xclang \
+    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.* src/tmp/{file}.cpp # C++ frontend
 ```
 [New]
 ```bash
-$ clang -fexperimental-new-pass-manager -fpass-plugin=build/CustomNewPass/libCustomNewPass.so  tmp/{file}.c # C frontend
-$ clang++ -fexperimental-new-pass-manager -fpass-plugin=build/CustomNewPass/libCustomNewPass.so  tmp/{file}.cpp # C++ frontend
+$ clang \
+    -fexperimental-new-pass-manager \
+    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so  src/tmp/{file}.c # C frontend
+$ clang++ \
+    -fexperimental-new-pass-manager \
+    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so  src/tmp/{file}.cpp # C++ frontend
 ```
 
-Note that Clang is the compiler front-end of the LLVM project.
-It can be installed separately in binary form.
+Note:
+- Execution of any command is from root dir, unless specifically mentioned
+- Clang is the compiler front-end of the LLVM project. It can be installed separately in binary form.
 
 ## Using opt [llvm optimiser] ##
 
@@ -120,21 +129,34 @@ It can be installed separately in binary form.
 
 [.ll|.bc]
 ```bash
-$ clang -emit-llvm -S tmp/{file}.c* # tmp/{file}.ll
-$ clang -O1 -emit-llvm  tmp/{file}.c* -c # tmp/{file}.bc
+$ clang -emit-llvm -S src/tmp/{file}.c* # src/tmp/{file}.ll
+$ clang -O1 -emit-llvm  src/tmp/{file}.c* -c # src/tmp/{file}.bc
 # -O$ represent optimization level
 ```
-
 
 ### opt commands to load and enable custom pass for [.ll|.bc] file
 [Legacy]
 ```bash
-$ opt -load build/CustomLegacyPass/libCustomLegacyPass.so -MyLegacyPass -disable-output tmp/{file}.[bc|ll] 
-# or  opt -load build/CustomLegacyPass/libCustomLegacyPass.so -MyLegacyPass < tmp/{file}.[bc|ll]  > /dev/null     
+$ opt \
+    -load build/CustomLegacyPass/libCustomLegacyPass.so \
+    -MyLegacyPass -disable-output src/tmp/{file}.[bc|ll] 
+# or  opt -load build/CustomLegacyPass/libCustomLegacyPass.so -MyLegacyPass < src/tmp/{file}.[bc|ll]  > /dev/null     
 ```
 [New]
 ```bash
-$ opt -load-pass-plugin=build/CustomNewPass/libCustomNewPass.so -passes="MyNewPass"  -disable-output tmp/{file}.[bc|ll]
+$ opt \
+    -load-pass-plugin=build/CustomNewPass/libCustomNewPass.so \
+    -passes="MyNewPass"  -disable-output src/tmp/{file}.[bc|ll]
+```
+
+To generate modified [.bc] file after optimization performed by plugged in pass, 
+we add -S flag to get output and store it in new [.bc] file
+
+```bash
+$ opt \
+    -S \
+    -load-pass-plugin=build/CustomNewPass/libCustomNewPass.so \
+    -passes="MyNewPass"  src/tmp/{filev1}.bc > src/tmp/{filev2}.bc
 ```
 
 ### Further resources

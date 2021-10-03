@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Build Dir
+build
+
+# VSCode Settings
+.vscode
+
+# temporary dir to store [.c|.cpp|.bc|.ll] files and 
+tmp
+.DS_Store

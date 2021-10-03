@@ -11,6 +11,11 @@ PreservedAnalyses MyNewPass::run(
     return PreservedAnalyses::all();
 }
 
+
+/*
+Register vectorized start EP Call back
+(Effective when using `clang` toolkit for pluging in the pass)
+*/
 // PassPluginLibraryInfo LLVM_ATTRIBUTE_WEAK
 // llvmGetPassPluginInfo() {
 //     return {
@@ -28,6 +33,10 @@ PreservedAnalyses MyNewPass::run(
 //     };
 // }
 
+/*
+Register pipeline parsing Callback
+(Effective when using `opt` toolkit for pluging in the pass)
+*/
 PassPluginLibraryInfo LLVM_ATTRIBUTE_WEAK
 llvmGetPassPluginInfo() {
     return {
