@@ -2,8 +2,6 @@ add_library(CustomNewPass MODULE
     # List your source files here.
     MyNewPass.cpp
     MyNewPass.h
-    # HelloWorld.cpp 
-    # HelloWorld.h
 )
 
 # Use C++11 to compile your pass (i.e., supply -std=c++11).
