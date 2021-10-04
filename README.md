@@ -40,8 +40,8 @@ llvm-tutorial
 
 4 directories, 15 files
 ```
-- src dir: Boilerplate files for legacy and new passes are provided, along with CMake files for easy compilation.
-- tmp dir: Sample [.c|.cpp] files are provided for testing passes, along with their respect [.bc|.ll] files
+- ./src dir: Boilerplate files for legacy and new passes are provided, along with CMake files for easy compilation.
+- ./src/tmp dir: Sample [.c|.cpp] files are provided for testing passes, along with their respect [.bc|.ll] files
 
 ## Compiling LLVM ##
 Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).
