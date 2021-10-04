@@ -16,6 +16,8 @@ PreservedAnalyses MyNewPass::run(
 Register vectorized start EP Call back
 (Effective when using `clang` toolkit for pluging in the pass)
 */
+// extern "C" ::llvm::PassPluginLibraryInfo LLVM_ATTRIBUTE_WEAK
+
 // PassPluginLibraryInfo LLVM_ATTRIBUTE_WEAK
 // llvmGetPassPluginInfo() {
 //     return {
