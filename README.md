@@ -174,7 +174,7 @@ clang -emit-llvm -S samples/{file}.c*
 # samples/{file}.bc
 clang -O1 -emit-llvm samples/{file}.c* -c 
 clang -Xclang -disable-O0-optnone -emit-llvm samples/test.c -c
-# disable no optimisation
+# disable optimisation (O0)
 # -O* represent optimization level
 
 # To get IR in human readable format
