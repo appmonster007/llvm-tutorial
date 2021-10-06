@@ -41,7 +41,7 @@ llvm-tutorial
 - ./src dir: Boilerplate files for legacy and new passes are provided, along with CMake files for easy compilation.
 - ./samples dir: Sample [.c|.cpp] files are provided for testing passes.
 
-## Compiling LLVM ##
+### Compiling LLVM ###
 Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).
 It can also be convenient in the case of developing out-of-source passes as it gives you full control over the compilation options.
 For example, a debug build of LLVM is much more pleasant to work with compared to an optimized one. To compile LLVM, please follow the following steps:
@@ -86,7 +86,7 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]` 
     as it won't be expanded. Use `$HOME` or an absolute path instead.
 
 
-## Brew installation ##
+### Brew installation ###
 Download header and pre-compiled binary files using Homebrew or Linuxbrew
 
 1. Download and install llvm
@@ -162,7 +162,8 @@ clang++ \
 - Execution of any command is from root dir, unless specifically mentioned
 - Clang is the compiler front-end of the LLVM project. It can be installed separately in binary form.
 
-## Using opt [llvm optimiser] ##
+## Using clang and opt [llvm optimiser] ##
+for plugging in the pass in optimization pipeline
 
 ### Building low level file (.ll) and bytecode file (.bc) ###
 
@@ -230,7 +231,15 @@ opt -S -dot-cfg samples/{file_V1}.bc > {file_V2}.bc # or
 opt -S -dot-cfg samples/{file_V1}.bc -o {file_V2}.bc
 ```
 
-### Further resources ###
+## References ##
+- Adrian Sampson's "LLVM for Grad Students"  
+[sampsyo/llvm-pass-skeleton](https://github.com/sampsyo/llvm-pass-skeleton) (github repo)
+- [banach-space/llvm-tutor](https://github.com/banach-space/llvm-tutor) (github repo)
+- LLVM [Documentation](llvm.org)
+-  Writing an LLVM Pass: 101;  
+    LLVM 2019 tutorial by Andrzej Warzyński
+
+## Further resources ##  
 This tutorial is based on the following resources
 
 - Adrian Sampson's blog entry "LLVM for Grad Students" ([link](http://adriansampson.net/blog/llvm.html))
@@ -248,12 +257,3 @@ This tutorial is based on the following resources
 - Installed LLVM doesn't get added to $PATH #29733 (github issue) ([link](https://github.com/Homebrew/legacy-homebrew/issues/29733))
 - How to automatically register and load modern Pass in Clang? (so) ([link](https://stackoverflow.com/questions/54447985/how-to-automatically-register-and-load-modern-pass-in-clang))
 - How to write your own compiler  ([link](https://staff.polito.it/silvano.rivoira/HowToWriteYourOwnCompiler.htm))
-
-
-### Reference ###
-- Adrian Sampson's "LLVM for Grad Students"  
-[sampsyo/llvm-pass-skeleton](https://github.com/sampsyo/llvm-pass-skeleton) (github repo)
-- [banach-space/llvm-tutor](https://github.com/banach-space/llvm-tutor) (github repo)
-- LLVM [Documentation](llvm.org)
--  Writing an LLVM Pass: 101;  
-    LLVM 2019 tutorial by Andrzej Warzyński
