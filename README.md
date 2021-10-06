@@ -18,30 +18,27 @@ We assume that you have a working compiler toolchain (GCC or LLVM) and that CMak
 ### Current file structure ###
 ```
 llvm-tutorial
+├── ELI5.md
 ├── LICENSE
 ├── README.md
+├── samples
+│   ├── cfile.c
+│   └── cppfile.cpp
 └── src
     ├── CMakeLists.txt
     ├── CustomLegacyPass
-    │   ├── CMakeLists.txt
-    │   ├── MyLegacyPass.cpp
-    │   └── MyLegacyPass.h
-    ├── CustomNewPass
-    │   ├── CMakeLists.txt
-    │   ├── MyNewPass.cpp
-    │   └── MyNewPass.h
-    └── tmp
-        ├── cfile.bc
-        ├── cfile.c
-        ├── cfile.ll
-        ├── cppfile.bc
-        ├── cppfile.cpp
-        └── cppfile.ll
+    │   ├── CMakeLists.txt
+    │   ├── MyLegacyPass.cpp
+    │   └── MyLegacyPass.h
+    └── CustomNewPass
+        ├── CMakeLists.txt
+        ├── MyNewPass.cpp
+        └── MyNewPass.h
 
-4 directories, 15 files
+4 directories, 12 files
 ```
 - ./src dir: Boilerplate files for legacy and new passes are provided, along with CMake files for easy compilation.
-- ./src/tmp dir: Sample [.c|.cpp] files are provided for testing passes, along with their respect [.bc|.ll] files
+- ./samples dir: Sample [.c|.cpp] files are provided for testing passes.
 
 ## Compiling LLVM ##
 Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).
@@ -139,24 +136,24 @@ setup `[LLVM_DIR]` based on `$LLVM_HOME` for you. Now the easiest way to run the
 # C frontend
 clang \
     -Xclang \
-    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.so src/tmp/{file}.c 
+    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.so samples/{file}.c 
 
 # C++ frontend
 clang++ \
     -Xclang \
-    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.* src/tmp/{file}.cpp 
+    -load -Xclang build/CustomLegacyPass/libCustomLegacyPass.* samples/{file}.cpp 
 ```
 [New]
 ```bash
 # C frontend
 clang \
     -fexperimental-new-pass-manager \
-    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so src/tmp/{file}.c
+    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so samples/{file}.c
 
 # C++ frontend
 clang++ \
     -fexperimental-new-pass-manager \
-    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so src/tmp/{file}.cpp
+    -fpass-plugin=build/CustomNewPass/libCustomNewPass.so samples/{file}.cpp
 ```
 
 **NOTE**:
@@ -169,17 +166,22 @@ clang++ \
 
 [.ll|.bc]
 ```bash
-clang -emit-llvm -S src/tmp/{file}.c* # src/tmp/{file}.ll
+# samples/{file}.ll
+clang -emit-llvm -S samples/{file}.c* 
 
-clang -O1 -emit-llvm src/tmp/{file}.c* -c # src/tmp/{file}.bc
+# samples/{file}.bc
+clang -O1 -emit-llvm samples/{file}.c* -c 
+clang -Xclang -disable-O0-optnone -emit-llvm samples/test.c -c
+# disable no optimisation
 # -O* represent optimization level
 
-cat src/tmp/{file}.ll
+# To get IR in human readable format
+cat samples/{file}.ll
 ```
 
 Executing [.ll|.bc] files
 ```bash
-lli src/tmp/{file}[.ll|.bc]
+lli samples/{file}[.ll|.bc]
 ```
 
 We can also use the cc1 for generating IR:
@@ -187,8 +189,8 @@ We can also use the cc1 for generating IR:
 ```bash
 clang \
     -cc1 \
-    -emit-llvm src/tmp/{file}[.c|.cpp] \
-    -o src/tmp/{file}.ll
+    -emit-llvm samples/{file}[.c|.cpp] \
+    -o samples/{file}.ll
 ```
 
 ### opt commands to load and enable custom pass for [.ll|.bc] file ###
@@ -196,18 +198,18 @@ clang \
 ```bash
 opt \
     -load build/CustomLegacyPass/libCustomLegacyPass.so \
-    -"MyLegacyPass" -disable-output src/tmp/{file}.[bc|ll] 
+    -"MyLegacyPass" -disable-output samples/{file}.[bc|ll] 
     
 # Alternative 
 opt \
     -load build/CustomLegacyPass/libCustomLegacyPass.so \ 
-    -MyLegacyPass < src/tmp/{file}.[bc|ll] > /dev/null 
+    -MyLegacyPass < samples/{file}.[bc|ll] > /dev/null 
 ```
 [New]
 ```bash
 opt \
     -load-pass-plugin=build/CustomNewPass/libCustomNewPass.so \
-    -passes="MyNewPass" -disable-output src/tmp/{file}.[bc|ll]
+    -passes="MyNewPass" -disable-output samples/{file}.[bc|ll]
 ```
 
 To generate modified [.bc] file after optimization performed by plugged in pass, 
@@ -217,13 +219,13 @@ we add -S flag to get output and store it in new [.bc] file
 opt \
     -S \
     -load-pass-plugin=build/CustomNewPass/libCustomNewPass.so \
-    -passes="MyNewPass" src/tmp/{file_V1}.bc > src/tmp/{file_V2}.bc
+    -passes="MyNewPass" samples/{file_V1}.bc > samples/{file_V2}.bc
 ```
 
 To generate CFG files use -dot-cfg flag
 ```bash
-opt -S -dot-cfg src/tmp/{file_V1}.bc > {file_V2}.bc # or
-opt -S -dot-cfg src/tmp/{file_V1}.bc -o {file_V2}.bc
+opt -S -dot-cfg samples/{file_V1}.bc > {file_V2}.bc # or
+opt -S -dot-cfg samples/{file_V1}.bc -o {file_V2}.bc
 ```
 
 ### Further resources ###

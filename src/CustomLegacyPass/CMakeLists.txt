@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.4)
 include_directories(${LLVM_INCLUDE_DIRS})
 
-add_llvm_library(CustomLegacyPass MODULE
+add_llvm_library(
+    CustomLegacyPass 
+    SHARED
     # List your source files here.
     MyLegacyPass.cpp
     MyLegacyPass.h
