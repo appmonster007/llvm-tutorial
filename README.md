@@ -104,7 +104,8 @@ Download header and pre-compiled binary files using Homebrew or Linuxbrew
 
     [Optional] For those using VScode, include following path in c++ include path settings
     ```
-    /usr/local/opt/llvm/include/**
+    # PATH TO LLVM_HOME DIR
+    /usr/local/opt/llvm/**
     ```
 
 
