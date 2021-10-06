@@ -18,6 +18,7 @@ We assume that you have a working compiler toolchain (GCC or LLVM) and that CMak
 ### Current file structure ###
 ```
 llvm-tutorial
+├── .gitignore
 ├── ELI5.md
 ├── LICENSE
 ├── README.md
@@ -35,7 +36,7 @@ llvm-tutorial
         ├── MyNewPass.cpp
         └── MyNewPass.h
 
-4 directories, 12 files
+4 directories, 13 files
 ```
 - ./src dir: Boilerplate files for legacy and new passes are provided, along with CMake files for easy compilation.
 - ./samples dir: Sample [.c|.cpp] files are provided for testing passes.
