@@ -257,3 +257,10 @@ This tutorial is based on the following resources
 - Installed LLVM doesn't get added to $PATH #29733 (github issue) ([link](https://github.com/Homebrew/legacy-homebrew/issues/29733))
 - How to automatically register and load modern Pass in Clang? (so) ([link](https://stackoverflow.com/questions/54447985/how-to-automatically-register-and-load-modern-pass-in-clang))
 - How to write your own compiler  ([link](https://staff.polito.it/silvano.rivoira/HowToWriteYourOwnCompiler.htm))
+
+### Roadmap for becoming Compiler engineer
+- Compilers & LLVM roadmap ([link](https://whimsical.com/compilers-llvm-roadmap-KXYjNa3T8hevz8njhDdc1s))
+- How to contribute to LLVM Open Source as a student? ([link](https://www.linkedin.com/pulse/how-contribute-llvm-open-source-student-sushim-shrivastava/))
+- Learning Compilers/LLVM: How to start? ([link](https://www.linkedin.com/pulse/learning-compilersllvm-how-start-sushim-shrivastava/))
+- Preparing for Compiler Design as a Career ([link](https://www.linkedin.com/pulse/preparing-compiler-design-career-sushim-shrivastava/))
+
