@@ -58,7 +58,12 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]` 
 3. Instruct CMake to detect and configure your build environment:
 
     ```bash
-    cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]
+    cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [PATH_TO_LLVM_SRC]   #or
+    cmake -DLLVM_ENABLE_PROJECTS='clang;openmp' \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DLLVM_ENABLE_ASSERTIONS=ON \
+        -DLLVM_CCACHE_BUILD={ON,OFF} \
+        -G Ninja [PATH_TO_LLVM_SRC]
     ```
     Note that we instructed cmake to only build `X86` backend.
     You can choose a different backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
